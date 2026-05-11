@@ -59,6 +59,8 @@ public class CristianAlgorithm {
 
         System.out.println("=== Cristian Algorithm Simulation ===");
 
+        Thread.sleep(1000);
+
         for (int i = 0; i < 5; i++) {
             client.adjustClock();
             Thread.sleep(1000);
