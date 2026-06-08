@@ -1,0 +1,4 @@
+com\soap\Publicador.class
+com\soap\ConversorSOAP.class
+com\soap\ConversorSOAPInterface.class
+com\soap\ClienteSOAP.class

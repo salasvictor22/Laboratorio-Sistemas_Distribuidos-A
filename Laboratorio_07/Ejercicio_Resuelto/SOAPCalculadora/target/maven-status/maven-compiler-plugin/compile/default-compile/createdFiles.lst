@@ -1,0 +1,4 @@
+com\soap\CalculadoraSOAP.class
+com\soap\CalculadoraSOAPInterface.class
+com\soap\Publicador.class
+com\soap\ClienteSOAP.class

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Cliente SOAP desde Navegador</title>
+</head>
+<body>
+    <h2>Cliente SOAP con HTML + JavaScript</h2>
+
+    <p>
+        Este ejemplo intenta consumir un servicio SOAP desde el navegador usando JavaScript.
+    </p>
+
+    <button onclick="sumar()">Sumar 5 + 8</button>
+    <button onclick="restar()">Restar 5 - 8</button>
+    <button onclick="multiplicar()">Multiplicar 5 * 8</button>
+    <button onclick="dividir()">Dividir 5 / 8</button>
+
+    <h3>Resultado:</h3>
+    <pre id="resultado"></pre>
+
+    <script>
+        function consumirSOAP(operacion, valorA, valorB) {
+            const url = "http://www.dneonline.com/calculator.asmx";
+
+            const soapBody = `<?xml version="1.0" encoding="utf-8"?>
+<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+               xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+  <soap:Body>
+    <${operacion} xmlns="http://tempuri.org/">
+      <intA>${valorA}</intA>
+      <intB>${valorB}</intB>
+    </${operacion}>
+  </soap:Body>
+</soap:Envelope>`;
+
+            fetch(url, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "text/xml; charset=utf-8",
+                    "SOAPAction": `http://tempuri.org/${operacion}`
+                },
+                body: soapBody
+            })
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById("resultado").textContent = data;
+                console.log(data);
+            })
+            .catch(error => {
+                document.getElementById("resultado").textContent =
+                    "Error al consumir SOAP desde el navegador:\n\n" + error;
+                console.error(error);
+            });
+        }
+
+        function sumar() {
+            consumirSOAP("Add", 5, 8);
+        }
+
+        function restar() {
+            consumirSOAP("Subtract", 5, 8);
+        }
+
+        function multiplicar() {
+            consumirSOAP("Multiply", 5, 8);
+        }
+
+        function dividir() {
+            consumirSOAP("Divide", 5, 8);
+        }
+    </script>
+</body>
+</html>
